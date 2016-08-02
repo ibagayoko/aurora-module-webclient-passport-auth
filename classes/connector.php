@@ -2,7 +2,7 @@
 
 class CExternalServicesConnectorFacebook extends CExternalServicesConnector
 {
-	public static $ConnectorName = 'dropbox';
+	public static $ConnectorName = 'facebook';
 			
 	public function GetSupportedScopes()
 	{
