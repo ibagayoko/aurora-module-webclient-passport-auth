@@ -5,6 +5,7 @@ class FacebookAuthModule extends AApiModule
 	protected $sService = 'facebook';
 	
 	protected $aSettingsMap = array(
+		'EnableModule' => array(false, 'bool'),
 		'Id' => array('', 'string'),
 		'Secret' => array('', 'string')
 	);
@@ -20,7 +21,7 @@ class FacebookAuthModule extends AApiModule
 		$this->subscribeEvent('GetServices', array($this, 'onGetServices'));
 		$this->subscribeEvent('GetServicesSettings', array($this, 'onGetServicesSettings'));
 		$this->subscribeEvent('UpdateServicesSettings', array($this, 'onUpdateServicesSettings'));
-}
+	}
 	
 	/**
 	 * Adds service name to array passed by reference.
@@ -29,7 +30,10 @@ class FacebookAuthModule extends AApiModule
 	 */
 	public function onGetServices(&$aServices)
 	{
-		$aServices[] = $this->sService;
+		if ($this->getConfig('EnableModule', false))
+		{
+			$aServices[] = $this->sService;
+		}
 	}
 	
 	/**
