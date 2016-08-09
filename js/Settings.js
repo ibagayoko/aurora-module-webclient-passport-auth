@@ -5,7 +5,7 @@ var
 ;
 
 module.exports = {
-	ServerModuleName: 'FacebookAuth',
+	ServerModuleName: 'FacebookAuthWebclient',
 	HashModuleName: 'facebook-auth',
 	
 	Connected: false,

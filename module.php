@@ -11,13 +11,13 @@ class FacebookAuthModule extends AApiModule
 	);
 	
 	protected $aRequireModules = array(
-		'ExternalServices'
+		'OAuthIntegratorWebclient'
 	);
 	
 	public function init() 
 	{
 		$this->incClass('connector');
-		$this->subscribeEvent('ExternalServicesAction', array($this, 'onExternalServicesAction'));
+		$this->subscribeEvent('OAuthIntegratorAction', array($this, 'onOAuthIntegratorAction'));
 		$this->subscribeEvent('GetServices', array($this, 'onGetServices'));
 		$this->subscribeEvent('GetServicesSettings', array($this, 'onGetServicesSettings'));
 		$this->subscribeEvent('UpdateServicesSettings', array($this, 'onUpdateServicesSettings'));
@@ -72,10 +72,10 @@ class FacebookAuthModule extends AApiModule
 		if ($oUser && $oUser->Role === 1) // Power User
 		{
 			$oAccount = null;
-			$oExternalServicesDecorator = \CApi::GetModuleDecorator('ExternalServices');
-			if ($oExternalServicesDecorator)
+			$oOAuthIntegratorWebclientDecorator = \CApi::GetModuleDecorator('OAuthIntegratorWebclient');
+			if ($oOAuthIntegratorWebclientDecorator)
 			{
-				$oAccount = $oExternalServicesDecorator->GetAccount($this->sService);
+				$oAccount = $oOAuthIntegratorWebclientDecorator->GetAccount($this->sService);
 			}
 			return array(
 				'Connected' => $oAccount ? true : false
@@ -128,12 +128,12 @@ class FacebookAuthModule extends AApiModule
 		return true;
 	}
 	
-	public function onExternalServicesAction($sService, &$mResult)
+	public function onOAuthIntegratorAction($sService, &$mResult)
 	{
 		if ($sService === $this->sService)
 		{
 			$mResult = false;
-			$oConnector = new CExternalServicesConnectorFacebook($this);
+			$oConnector = new COAuthIntegratorConnectorFacebook($this);
 			if ($oConnector)
 			{
 				$mResult = $oConnector->Init();
@@ -144,10 +144,10 @@ class FacebookAuthModule extends AApiModule
 	public function DeleteAccount()
 	{
 		$bResult = false;
-		$oExternalServicesDecorator = \CApi::GetModuleDecorator('ExternalServices');
-		if ($oExternalServicesDecorator)
+		$oOAuthIntegratorWebclientDecorator = \CApi::GetModuleDecorator('OAuthIntegratorWebclient');
+		if ($oOAuthIntegratorWebclientDecorator)
 		{
-			$bResult = $oExternalServicesDecorator->DeleteAccount($this->sService);
+			$bResult = $oOAuthIntegratorWebclientDecorator->DeleteAccount($this->sService);
 		}		
 		
 		return $bResult;

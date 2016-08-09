@@ -1,6 +1,6 @@
 <?php
 
-class CExternalServicesConnectorFacebook extends CExternalServicesConnector
+class COAuthIntegratorConnectorFacebook extends COAuthIntegratorConnector
 {
 	public static $ConnectorName = 'facebook';
 			
@@ -26,10 +26,10 @@ class CExternalServicesConnectorFacebook extends CExternalServicesConnector
 		$oClient->client_secret = $this->oModule->GetConfig('Secret');
 		$oClient->scope = 'email';
 			
-		$oExternalServicesModule = \CApi::GetModule('ExternalServices');
-		if ($oExternalServicesModule)
+		$oOAuthIntegratorWebclientModule = \CApi::GetModule('OAuthIntegratorWebclient');
+		if ($oOAuthIntegratorWebclientModule)
 		{
-			$oClient->configuration_file = $oExternalServicesModule->GetPath() .'/classes/OAuthClient/'.$oClient->configuration_file;
+			$oClient->configuration_file = $oOAuthIntegratorWebclientModule->GetPath() .'/classes/OAuthClient/'.$oClient->configuration_file;
 		}
 		
 		return $oClient;

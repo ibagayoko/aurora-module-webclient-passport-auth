@@ -1,15 +1,15 @@
 {
-	"name": "afterlogic/aurora-module-facebook-auth",
+	"name": "afterlogic/aurora-module-webclient-facebook-auth",
     	"version":"0.1.0",
     	"type": "aurora-module",
     	"dist":{
-               "url":"https://github.com/afterlogic/aurora-module-facebook-auth/archive/master.zip",
+               "url":"https://github.com/afterlogic/aurora-module-webclient-facebook-auth/archive/master.zip",
                 "type":"zip"
         },
 	"require":{
 		"php":">=5.4.0"
 	},
 	"extra": {
-		"installer-name": "FacebookAuth"
+		"installer-name": "FacebookAuthWebclient"
 	}
 }
