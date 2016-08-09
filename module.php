@@ -71,8 +71,14 @@ class FacebookAuthModule extends AApiModule
 		
 		if ($oUser && $oUser->Role === 1) // Power User
 		{
+			$oAccount = null;
+			$oExternalServicesDecorator = \CApi::GetModuleDecorator('ExternalServices');
+			if ($oExternalServicesDecorator)
+			{
+				$oAccount = $oExternalServicesDecorator->GetAccount($this->sService);
+			}
 			return array(
-				'Connected' => true
+				'Connected' => $oAccount ? true : false
 			);
 		}
 		
@@ -134,4 +140,16 @@ class FacebookAuthModule extends AApiModule
 			}
 		}
 	}
+	
+	public function DeleteAccount()
+	{
+		$bResult = false;
+		$oExternalServicesDecorator = \CApi::GetModuleDecorator('ExternalServices');
+		if ($oExternalServicesDecorator)
+		{
+			$bResult = $oExternalServicesDecorator->DeleteAccount($this->sService);
+		}		
+		
+		return $bResult;
+	}		
 }
