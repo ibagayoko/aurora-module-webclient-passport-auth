@@ -1,6 +1,6 @@
 <?php
 
-class FacebookAuthModule extends AApiModule
+class FacebookAuthWebclientModule extends AApiModule
 {
 	protected $sService = 'facebook';
 	
