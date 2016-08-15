@@ -42,8 +42,8 @@ CUserSettingsView.prototype.ViewTemplate = '%ModuleName%_UserSettingsView';
 
 CUserSettingsView.prototype.connect = function ()
 {
-	$.cookie('external-services-redirect', 'connect');
-	WindowOpener.open(UrlUtils.getAppPath() + '?external-services=facebook', 'Facebook');
+	$.cookie('oauth-redirect', 'connect');
+	WindowOpener.open(UrlUtils.getAppPath() + '?oauth=facebook', 'Facebook');
 };
 
 CUserSettingsView.prototype.disconnect = function ()
