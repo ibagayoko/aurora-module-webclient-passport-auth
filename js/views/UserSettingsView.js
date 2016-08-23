@@ -25,7 +25,7 @@ function CUserSettingsView()
 	this.connected = ko.observable(Settings.Connected);
 	this.bRunCallback = false;
 	
-	window.facebookConnectCallback = _.bind(function (bResult, sMessage) {
+	window.facebookConnectCallback = _.bind(function (bResult, sMessage, sModule) {
 		
 		this.bRunCallback = true;
 		if (!bResult) 
