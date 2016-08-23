@@ -58,7 +58,7 @@ CUserSettingsView.prototype.connect = function ()
 					if (!self.bRunCallback)
 					{
 						console.log('11111');
-						window.reload();
+						window.location.reload();
 					}
 					else
 					{
