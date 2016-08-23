@@ -23,7 +23,11 @@ function CUserSettingsView()
 	CAbstractSettingsFormView.call(this, Settings.ServerModuleName);
 	
 	this.connected = ko.observable(Settings.Connected);
-	window.facebookSettingsViewModelCallback = _.bind(function (bResult, sMessage) {
+	this.bRunCallback = false;
+	
+	window.facebookConnectCallback = _.bind(function (bResult, sMessage) {
+		
+		this.bRunCallback = true;
 		if (!bResult) 
 		{
 			Screens.showError(sMessage);
@@ -43,7 +47,13 @@ CUserSettingsView.prototype.ViewTemplate = '%ModuleName%_UserSettingsView';
 CUserSettingsView.prototype.connect = function ()
 {
 	$.cookie('oauth-redirect', 'connect');
-	WindowOpener.open(UrlUtils.getAppPath() + '?oauth=facebook', 'Facebook');
+	var oWin = WindowOpener.open(UrlUtils.getAppPath() + '?oauth=facebook', 'Facebook');
+	oWin.onbeforeunload = function (ev) {
+		if (!this.bRunCallback) 
+		{
+			window.location.reload();
+		}
+	};
 };
 
 CUserSettingsView.prototype.disconnect = function ()
