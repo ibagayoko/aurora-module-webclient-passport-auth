@@ -53,15 +53,18 @@ CUserSettingsView.prototype.connect = function ()
 		intervalID = setInterval(
 			function() { 
 				console.log('interval');
-				if (oWin.closed && !self.bRunCallback)
+				if (oWin.closed)
 				{
-					console.log('11111');
-					window.reload();
-				}
-				else
-				{
-					console.log('22222');
-					clearInterval(intervalID);
+					if (!self.bRunCallback)
+					{
+						console.log('11111');
+						window.reload();
+					}
+					else
+					{
+						console.log('22222');
+						clearInterval(intervalID);
+					}
 				}
 			}, 1000
 	);
