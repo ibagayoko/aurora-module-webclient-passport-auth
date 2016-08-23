@@ -49,6 +49,7 @@ CUserSettingsView.prototype.connect = function ()
 	$.cookie('oauth-redirect', 'connect');
 	var oWin = WindowOpener.open(UrlUtils.getAppPath() + '?oauth=facebook', 'Facebook');
 	oWin.onbeforeunload = function (ev) {
+		console.log(ev);
 		if (!this.bRunCallback) 
 		{
 			window.location.reload();
