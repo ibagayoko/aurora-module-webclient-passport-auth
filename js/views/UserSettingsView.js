@@ -47,7 +47,24 @@ CUserSettingsView.prototype.ViewTemplate = '%ModuleName%_UserSettingsView';
 CUserSettingsView.prototype.connect = function ()
 {
 	$.cookie('oauth-redirect', 'connect');
-	var oWin = WindowOpener.open(UrlUtils.getAppPath() + '?oauth=facebook', 'Facebook');
+	var 
+		self = this,
+		oWin = WindowOpener.open(UrlUtils.getAppPath() + '?oauth=facebook', 'Facebook'),
+		intervalID = setInterval(
+			function() { 
+				if (oWin.closed && !self.bRunCallback)
+				{
+					window.reload();
+				}
+				else
+				{
+					clearInterval(intervalID);
+				}
+			}, 1000
+	);
+	
+	
+	
 	oWin.onbeforeunload = function (ev) {
 		console.log(ev);
 		if (!this.bRunCallback) 
