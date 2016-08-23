@@ -52,32 +52,20 @@ CUserSettingsView.prototype.connect = function ()
 		oWin = WindowOpener.open(UrlUtils.getAppPath() + '?oauth=facebook', 'Facebook'),
 		intervalID = setInterval(
 			function() { 
-				console.log('interval');
 				if (oWin.closed)
 				{
 					if (!self.bRunCallback)
 					{
-						console.log('11111');
 						window.location.reload();
 					}
 					else
 					{
-						console.log('22222');
 						clearInterval(intervalID);
 					}
 				}
 			}, 1000
-	);
-	
-	
-	
-	oWin.onbeforeunload = function (ev) {
-		console.log(ev);
-		if (!this.bRunCallback) 
-		{
-			window.location.reload();
-		}
-	};
+		)
+	;
 };
 
 CUserSettingsView.prototype.disconnect = function ()
