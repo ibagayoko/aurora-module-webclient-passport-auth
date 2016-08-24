@@ -29,6 +29,7 @@ function CUserSettingsView()
 	this.bRunCallback = false;
 	
 	window.facebookConnectCallback = _.bind(function (bResult, sErrorCode, sModule) {
+		console.log('bResult, sErrorCode, sModule', bResult, sErrorCode, sModule);
 		this.bRunCallback = true;
 		
 		if (!bResult)
