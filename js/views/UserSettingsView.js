@@ -29,7 +29,6 @@ function CUserSettingsView()
 	this.bRunCallback = false;
 	
 	window.facebookConnectCallback = _.bind(function (bResult, sErrorCode, sModule) {
-		console.log('bResult, sErrorCode, sModule', bResult, sErrorCode, sModule);
 		this.bRunCallback = true;
 		
 		if (!bResult)
@@ -56,13 +55,11 @@ CUserSettingsView.prototype.connect = function ()
 	var
 		oWin = WindowOpener.open(UrlUtils.getAppPath() + '?oauth=facebook', 'Facebook'),
 		iIntervalId = setInterval(_.bind(function() {
-				console.log('oWin.closed', oWin.closed);
 			if (oWin.closed)
 			{
-					console.log('this.bRunCallback', this.bRunCallback);
 				if (!this.bRunCallback)
 				{
-//					window.location.reload();
+					window.location.reload();
 				}
 				else
 				{
