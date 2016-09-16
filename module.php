@@ -123,6 +123,7 @@ class FacebookAuthWebclientModule extends AApiModule
 				$oAccount = $oOAuthIntegratorWebclientDecorator->GetAccount($this->sService);
 			}
 			return array(
+				'EnableModule' => $this->getConfig('EnableModule', false),
 				'Connected' => $oAccount ? true : false
 			);
 		}
