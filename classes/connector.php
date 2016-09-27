@@ -1,5 +1,9 @@
 <?php
-
+/**
+ *
+ * @package Classes
+ * @subpackage AuthIntegrator
+ */
 class COAuthIntegratorConnectorFacebook extends COAuthIntegratorConnector
 {
 	public static $ConnectorName = 'facebook';
