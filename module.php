@@ -26,7 +26,7 @@ class FacebookAuthWebclientModule extends AApiModule
 		'EnableModule' => array(false, 'bool'),
 		'Id' => array('', 'string'),
 		'Secret' => array('', 'string'),
-		'Scopes' => array('login', 'string')
+		'Scopes' => array('auth', 'string')
 	);
 	
 	protected $aRequireModules = array(
@@ -85,7 +85,7 @@ class FacebookAuthWebclientModule extends AApiModule
 	{
 		if ($this->getConfig('EnableModule', false))
 		{
-			if ($this->issetScope('login'))
+			if ($this->issetScope('auth'))
 			{
 				$aServices[] = $this->sService;
 			}
