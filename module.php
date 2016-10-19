@@ -25,12 +25,18 @@ class FacebookAuthWebclientModule extends AApiModule
 	protected $aSettingsMap = array(
 		'EnableModule' => array(false, 'bool'),
 		'Id' => array('', 'string'),
-		'Secret' => array('', 'string')
+		'Secret' => array('', 'string'),
+		'Scopes' => array('login', 'string')
 	);
 	
 	protected $aRequireModules = array(
 		'OAuthIntegratorWebclient'
 	);
+	
+	protected function issetScope($sScope)
+	{
+		return in_array($sScope, explode(' ', $this->getConfig('Scopes')));
+	}
 	
 	/***** private functions *****/
 	/**
@@ -65,6 +71,8 @@ class FacebookAuthWebclientModule extends AApiModule
 				$mResult = $oConnector->Init();
 			}
 		}
+		
+		return true;
 	}
 	
 	/**
@@ -77,7 +85,10 @@ class FacebookAuthWebclientModule extends AApiModule
 	{
 		if ($this->getConfig('EnableModule', false))
 		{
-			$aServices[] = $this->sService;
+			if ($this->issetScope('login'))
+			{
+				$aServices[] = $this->sService;
+			}
 		}
 	}
 	
