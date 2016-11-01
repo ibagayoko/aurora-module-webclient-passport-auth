@@ -68,7 +68,10 @@ class FacebookAuthWebclientModule extends AApiModule
 			$oConnector = new COAuthIntegratorConnectorFacebook($this);
 			if ($oConnector)
 			{
-				$mResult = $oConnector->Init();
+				$mResult = $oConnector->Init(
+					\CApi::GetModule('Facebook')->getConfig('Id'), 
+					\CApi::GetModule('Facebook')->getConfig('Secret')
+				);
 			}
 		}
 		

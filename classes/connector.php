@@ -13,7 +13,7 @@ class COAuthIntegratorConnectorFacebook extends COAuthIntegratorConnector
 		return array('auth', 'filestorage');
 	}
 	
-	public function CreateClient()
+	public function CreateClient($sId, $sSecret)
 	{
 		$sRedirectUrl = rtrim(\MailSo\Base\Http::SingletonInstance()->GetFullUrl(), '\\/ ').'/?oauth='.self::$ConnectorName;
 		if (!strpos($sRedirectUrl, '://localhost'))
@@ -26,8 +26,8 @@ class COAuthIntegratorConnectorFacebook extends COAuthIntegratorConnector
 		$oClient->debug_http = self::$Debug;
 		$oClient->server = 'Facebook';
 		$oClient->redirect_uri = $sRedirectUrl;
-		$oClient->client_id = $this->oModule->GetConfig('Id');
-		$oClient->client_secret = $this->oModule->GetConfig('Secret');
+		$oClient->client_id = $sId;
+		$oClient->client_secret = $sSecret;;
 		$oClient->scope = 'email';
 			
 		$oOAuthIntegratorWebclientModule = \CApi::GetModule('OAuthIntegratorWebclient');
@@ -39,14 +39,12 @@ class COAuthIntegratorConnectorFacebook extends COAuthIntegratorConnector
 		return $oClient;
 	}
 	
-	public function Init()
+	public function Init($sId, $sSecret)
 	{
-		parent::Init();
-
 		$bResult = false;
 		$oUser = null;
 
-		$oClient = self::CreateClient();
+		$oClient = self::CreateClient($sId, $sSecret);
 		if($oClient)
 		{
 			if(($success = $oClient->Initialize()))
