@@ -6,16 +6,11 @@
  */
 class COAuthIntegratorConnectorFacebook extends COAuthIntegratorConnector
 {
-	public static $ConnectorName = 'facebook';
-			
-	public function GetSupportedScopes()
-	{
-		return array('auth', 'filestorage');
-	}
+	protected $Name = 'facebook';
 	
-	public function CreateClient($sId, $sSecret)
+	public function CreateClient($sId, $sSecret, $sScope)
 	{
-		$sRedirectUrl = rtrim(\MailSo\Base\Http::SingletonInstance()->GetFullUrl(), '\\/ ').'/?oauth='.self::$ConnectorName;
+		$sRedirectUrl = rtrim(\MailSo\Base\Http::SingletonInstance()->GetFullUrl(), '\\/ ').'/?oauth='.$this->Name;
 		if (!strpos($sRedirectUrl, '://localhost'))
 		{
 			$sRedirectUrl = str_replace('http:', 'https:', $sRedirectUrl);
@@ -27,7 +22,7 @@ class COAuthIntegratorConnectorFacebook extends COAuthIntegratorConnector
 		$oClient->server = 'Facebook';
 		$oClient->redirect_uri = $sRedirectUrl;
 		$oClient->client_id = $sId;
-		$oClient->client_secret = $sSecret;;
+		$oClient->client_secret = $sSecret;
 		$oClient->scope = 'email';
 			
 		$oOAuthIntegratorWebclientModule = \CApi::GetModule('OAuthIntegratorWebclient');
@@ -39,14 +34,14 @@ class COAuthIntegratorConnectorFacebook extends COAuthIntegratorConnector
 		return $oClient;
 	}
 	
-	public function Init($sId, $sSecret)
+	public function Init($sId, $sSecret, $sScope = '')
 	{
-		$bResult = false;
-		$oUser = null;
+		$mResult = false;
 
-		$oClient = self::CreateClient($sId, $sSecret);
+		$oClient = $this->CreateClient($sId, $sSecret, $sScope);
 		if($oClient)
 		{
+			$oUser = null;
 			if(($success = $oClient->Initialize()))
 			{
 				if(($success = $oClient->Process()))
@@ -57,7 +52,9 @@ class COAuthIntegratorConnectorFacebook extends COAuthIntegratorConnector
 							'https://graph.facebook.com/me',
 							'GET',
 							array(),
-							array('FailOnAccessError' => true),
+							array(
+								'FailOnAccessError' => true
+							),
 							$oUser
 						);
 					}
@@ -68,34 +65,26 @@ class COAuthIntegratorConnectorFacebook extends COAuthIntegratorConnector
 
 			if($oClient->exit)
 			{
-				$bResult = false;
 				exit;
 			}
 
 			if ($success && $oUser)
 			{
-				$oClient->ResetAccessToken();
-
-				$aSocial = array(
-					'type' => self::$ConnectorName,
+				$mResult = array(
+					'type' => $this->Name,
 					'id' => $oUser->id,
 					'name' => $oUser->name,
 					'email' => isset($oUser->email) ? $oUser->email : '',
 					'access_token' => $oClient->access_token,
-					'scopes' => self::$Scopes
+					'scopes' => explode('|', $sScope)
 				);
-
-				\CApi::Log('social_user_' . self::$ConnectorName);
-				\CApi::LogObject($oUser);
-
-				$bResult = $aSocial;
 			}
 			else
 			{
 				$oClient->ResetAccessToken();
-				$bResult = false;
+				$mResult = false;
 			}
 		}
 		
-		return $bResult;
+		return $mResult;
 	}}
