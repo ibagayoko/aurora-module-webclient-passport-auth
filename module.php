@@ -54,7 +54,10 @@ class FacebookAuthWebclientModule extends AApiModule
 	 */
 	public function onAfterGetServices($aArgs, &$aServices)
 	{
-		if ($this->getConfig('EnableModule', false))
+		$oGoogleModule = \CApi::GetModule('Facebook'); 
+		
+		if ($oGoogleModule->getConfig('EnableModule', false) &&
+			!empty($oGoogleModule->getConfig('Id', '')) && !empty($oGoogleModule->getConfig('Secret', '')))
 		{
 			$aServices[] = $this->sService;
 		}
