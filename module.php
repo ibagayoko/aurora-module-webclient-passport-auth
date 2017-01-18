@@ -22,10 +22,6 @@ class FacebookAuthWebclientModule extends AApiModule
 {
 	protected $sService = 'facebook';
 	
-	protected $aSettingsMap = array(
-		'Scopes' => array('auth', 'string')
-	);
-
 	protected $aRequireModules = array(
 		'OAuthIntegratorWebclient', 
 		'Facebook'
