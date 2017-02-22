@@ -18,7 +18,9 @@
  * @package Modules
  */
 
-class FacebookAuthWebclientModule extends AApiModule
+namespace Aurora\Modules;
+
+class FacebookAuthWebclientModule extends \AApiModule
 {
 	protected $sService = 'facebook';
 	
@@ -77,7 +79,7 @@ class FacebookAuthWebclientModule extends AApiModule
 		{
 			$aScopes = $_COOKIE['oauth-scopes'];
 			$mResult = false;
-			$oConnector = new COAuthIntegratorConnectorFacebook($this);
+			$oConnector = new \COAuthIntegratorConnectorFacebook($this);
 			if ($oConnector)
 			{
 				$mResult = $oConnector->Init(
