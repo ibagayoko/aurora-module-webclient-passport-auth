@@ -20,7 +20,7 @@
 
 namespace Aurora\Modules;
 
-class FacebookAuthWebclientModule extends \AApiModule
+class FacebookAuthWebclientModule extends \Aurora\System\AbstractModule
 {
 	protected $sService = 'facebook';
 	
@@ -57,7 +57,7 @@ class FacebookAuthWebclientModule extends \AApiModule
 	 */
 	public function onAfterGetServices($aArgs, &$aServices)
 	{
-		$oModule = \CApi::GetModule('Facebook'); 
+		$oModule = \Aurora\System\Api::GetModule('Facebook'); 
 		
 		if ($oModule->getConfig('EnableModule', false) && $this->issetScope('auth') &&
 			!empty($oModule->getConfig('Id', '')) && !empty($oModule->getConfig('Secret', '')))
@@ -83,8 +83,8 @@ class FacebookAuthWebclientModule extends \AApiModule
 			if ($oConnector)
 			{
 				$mResult = $oConnector->Init(
-					\CApi::GetModule('Facebook')->getConfig('Id'), 
-					\CApi::GetModule('Facebook')->getConfig('Secret'),
+					\Aurora\System\Api::GetModule('Facebook')->getConfig('Id'), 
+					\Aurora\System\Api::GetModule('Facebook')->getConfig('Secret'),
 					$aScopes
 				);
 			}
@@ -101,7 +101,7 @@ class FacebookAuthWebclientModule extends \AApiModule
 	 */
 	public function onGetSettings($aArgs, &$mResult)
 	{
-		$oUser = \CApi::getAuthenticatedUser();
+		$oUser = \Aurora\System\Api::getAuthenticatedUser();
 		
 		if (!empty($oUser))
 		{
