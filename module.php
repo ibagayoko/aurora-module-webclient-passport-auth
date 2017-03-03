@@ -20,7 +20,7 @@
 
 namespace Aurora\Modules;
 
-class FacebookAuthWebclientModule extends \Aurora\System\AbstractModule
+class FacebookAuthWebclientModule extends \Aurora\System\Module\AbstractModule
 {
 	protected $sService = 'facebook';
 	
