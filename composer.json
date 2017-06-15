@@ -6,6 +6,8 @@
 		"afterlogic/aurora-framework": "~0.4"
 	},
 	"extra": {
-		"installer-name": "FacebookAuthWebclient"
+		"installer-name": "FacebookAuthWebclient",
+		"include-in-mobile": false,
+		"include-in-desktop": true
 	}
 }
