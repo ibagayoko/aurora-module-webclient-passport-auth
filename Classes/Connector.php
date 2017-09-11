@@ -21,10 +21,10 @@ class Connector extends \Aurora\Modules\OAuthIntegratorWebclient\Classes\Connect
 	
 	public function CreateClient($sId, $sSecret, $sScope)
 	{
-		$sRedirectUrl = rtrim(\MailSo\Base\Http::SingletonInstance()->GetFullUrl(), '\\/ ').'/?oauth='.$this->Name;
-		if (!strpos($sRedirectUrl, '://localhost'))
+		$sRedirectUrl = \rtrim(\MailSo\Base\Http::SingletonInstance()->GetFullUrl(), '\\/ ').'/?oauth='.$this->Name;
+		if (!\strpos($sRedirectUrl, '://localhost'))
 		{
-			$sRedirectUrl = str_replace('http:', 'https:', $sRedirectUrl);
+			$sRedirectUrl = \str_replace('http:', 'https:', $sRedirectUrl);
 		}
 
 		$oClient = new \oauth_client_class;
@@ -57,7 +57,7 @@ class Connector extends \Aurora\Modules\OAuthIntegratorWebclient\Classes\Connect
 			{
 				if(($success = $oClient->Process()))
 				{
-					if (strlen($oClient->access_token))
+					if (\strlen($oClient->access_token))
 					{
 						$success = $oClient->CallAPI(
 							'https://graph.facebook.com/me',
@@ -87,7 +87,7 @@ class Connector extends \Aurora\Modules\OAuthIntegratorWebclient\Classes\Connect
 					'name' => $oUser->name,
 					'email' => isset($oUser->email) ? $oUser->email : '',
 					'access_token' => $oClient->access_token,
-					'scopes' => explode('|', $sScope)
+					'scopes' => \explode('|', $sScope)
 				);
 			}
 			else
