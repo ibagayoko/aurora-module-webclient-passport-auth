@@ -5,7 +5,7 @@
  * For full statements of the licenses see LICENSE-AFTERLOGIC and LICENSE-AGPL3 files.
  */
 
-namespace Aurora\Modules\FacebookAuthWebclient\Classes;
+namespace Aurora\Modules\PassportAuthWebclient\Classes;
 
 /**
  * @license https://www.gnu.org/licenses/agpl-3.0.html AGPL-3.0
@@ -17,7 +17,7 @@ namespace Aurora\Modules\FacebookAuthWebclient\Classes;
  */
 class Connector extends \Aurora\Modules\OAuthIntegratorWebclient\Classes\Connector
 {
-	protected $Name = 'facebook';
+	protected $Name = 'passport';
 	
 	public function CreateClient($sId, $sSecret, $sScope)
 	{
@@ -30,7 +30,7 @@ class Connector extends \Aurora\Modules\OAuthIntegratorWebclient\Classes\Connect
 		$oClient = new \oauth_client_class;
 		$oClient->debug = self::$Debug;
 		$oClient->debug_http = self::$Debug;
-		$oClient->server = 'Facebook';
+		$oClient->server = 'Passport';
 		$oClient->redirect_uri = $sRedirectUrl;
 		$oClient->client_id = $sId;
 		$oClient->client_secret = $sSecret;
@@ -59,8 +59,9 @@ class Connector extends \Aurora\Modules\OAuthIntegratorWebclient\Classes\Connect
 				{
 					if (\strlen($oClient->access_token))
 					{
+						// todo : change url
 						$success = $oClient->CallAPI(
-							'https://graph.facebook.com/me',
+							'https://localhost/api/user',
 							'GET',
 							array(),
 							array(

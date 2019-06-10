@@ -5,10 +5,10 @@
  * For full statements of the licenses see LICENSE-AFTERLOGIC and LICENSE-AGPL3 files.
  */
 
-namespace Aurora\Modules\FacebookAuthWebclient;
+namespace Aurora\Modules\PassportAuthWebclient;
 
 /**
- * Adds ability to login using Facebook account.
+ * Adds ability to login using Passport account.
  * 
  * @license https://www.gnu.org/licenses/agpl-3.0.html AGPL-3.0
  * @license https://afterlogic.com/products/common-licensing Afterlogic Software License
@@ -18,11 +18,11 @@ namespace Aurora\Modules\FacebookAuthWebclient;
  */
 class Module extends \Aurora\System\Module\AbstractWebclientModule
 {
-	protected $sService = 'facebook';
+	protected $sService = 'passport';
 	
 	protected $aRequireModules = array(
 		'OAuthIntegratorWebclient', 
-		'Facebook'
+		'Passport'
 	);
 	
 	/***** private functions *****/
@@ -32,7 +32,7 @@ class Module extends \Aurora\System\Module\AbstractWebclientModule
 	}
 	
 	/**
-	 * Initializes FacebookAuthWebclient Module.
+	 * Initializes PassportAuthWebclient Module.
 	 * 
 	 * @ignore
 	 */
@@ -40,8 +40,8 @@ class Module extends \Aurora\System\Module\AbstractWebclientModule
 	{
 		$this->subscribeEvent('OAuthIntegratorWebclient::GetServices::after', array($this, 'onAfterGetServices'));
 		$this->subscribeEvent('OAuthIntegratorAction', array($this, 'onOAuthIntegratorAction'));
-		$this->subscribeEvent('Facebook::GetSettings', array($this, 'onGetSettings'));
-		$this->subscribeEvent('Facebook::UpdateSettings::after', array($this, 'onAfterUpdateSettings'));
+		$this->subscribeEvent('Passport::GetSettings', array($this, 'onGetSettings'));
+		$this->subscribeEvent('Passport::UpdateSettings::after', array($this, 'onAfterUpdateSettings'));
 	}
 	
 	/**
@@ -53,7 +53,7 @@ class Module extends \Aurora\System\Module\AbstractWebclientModule
 	 */
 	public function onAfterGetServices($aArgs, &$aServices)
 	{
-		$oModule = \Aurora\System\Api::GetModule('Facebook');
+		$oModule = \Aurora\System\Api::GetModule('Passport');
 		$sId = $oModule->getConfig('Id', '');
 		$sSecret = $oModule->getConfig('Secret', '');
 		
@@ -80,8 +80,8 @@ class Module extends \Aurora\System\Module\AbstractWebclientModule
 			if ($oConnector)
 			{
 				$mResult = $oConnector->Init(
-					\Aurora\System\Api::GetModule('Facebook')->getConfig('Id'), 
-					\Aurora\System\Api::GetModule('Facebook')->getConfig('Secret'),
+					\Aurora\System\Api::GetModule('Passport')->getConfig('Id'), 
+					\Aurora\System\Api::GetModule('Passport')->getConfig('Secret'),
 					$sScopes
 				);
 			}
